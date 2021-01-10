@@ -1,0 +1,15 @@
+.flex-row-items {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.flex-country-names {
+  display: flex;
+  justify-content: space-around;
+}
+
+.table-item {
+  width: 100%;
+}

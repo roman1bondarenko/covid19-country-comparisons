@@ -1,0 +1,81 @@
+<div class="flex-row-items">
+  <mat-form-field appearance="fill">
+    <mat-label>Choose first country</mat-label>
+    <mat-select [(value)]="firstSelectedCountry">
+      <mat-option *ngFor="let country of countriesNames" value="{{country.Slug}}"> {{country.Country}} </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Choose second country</mat-label>
+    <mat-select [(value)]="secondSelectedCountry">
+      <mat-option *ngFor="let country of countriesNames" value="{{country.Slug}}"> {{country.Country}} </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter a date range</mat-label>
+
+    <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">
+      <input matStartDate formControlName="from" placeholder="Start date">
+      <input matEndDate formControlName="to" placeholder="End date">
+    </mat-date-range-input>
+
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+    <mat-date-range-picker #picker></mat-date-range-picker>
+
+    <mat-error *ngIf="dateRange.controls.from.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+    <mat-error *ngIf="dateRange.controls.to.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+  </mat-form-field>
+
+  <div>
+    <mat-button-toggle
+      class="mat-raised-button mat-primary"
+      (click)="compareCountries()"
+      [disabled]="isLoading"
+    >
+      Compare countries
+
+      <mat-icon *ngIf="isLoading">
+        <mat-spinner color="accent" diameter="20">
+        </mat-spinner>
+      </mat-icon>
+
+    </mat-button-toggle>
+  </div>
+
+  <div>
+    <mat-button-toggle (click)="clearFilters()">
+      Clear filters
+    </mat-button-toggle>
+  </div>
+</div>
+
+<div class="flex-country-names">
+  <mat-card *ngIf="firstSelectedCountry">
+    {{countries.get(firstSelectedCountry)?.Country}}
+  </mat-card>
+
+  <mat-card *ngIf="secondSelectedCountry">
+    {{countries.get(secondSelectedCountry)?.Country}}
+  </mat-card>
+</div>
+
+<div class="flex-row-items">
+  <app-table-stats
+    class="table-item"
+    [countryData]="firstCountryData"
+    [displayedColumns]="displayedTableColumns"
+  >
+  </app-table-stats>
+
+  <app-table-stats
+    class="table-item"
+    [countryData]="secondCountryData"
+    [displayedColumns]="displayedTableColumns"
+  >
+  </app-table-stats>
+
+</div>
+
