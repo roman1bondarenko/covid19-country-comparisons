@@ -8,7 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { TableStatsComponent } from 'src/app/components/table-stats/table-stats.component';
@@ -19,6 +19,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -43,6 +44,8 @@ import {MatCardModule} from '@angular/material/card';
     MatProgressSpinnerModule,
     MatIconModule,
     MatCardModule,
+    ChartsModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

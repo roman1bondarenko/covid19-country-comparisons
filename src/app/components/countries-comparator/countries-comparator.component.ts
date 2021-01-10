@@ -6,6 +6,8 @@ import {Country} from 'src/shared/types/country';
 import {DailyStat} from 'src/shared/types/daily-stat';
 import {CovidDataService} from 'src/app/services/covid-data.service';
 import {dateMapper} from '../../helpers/common';
+import {ChartDataSets} from 'chart.js';
+import {Label} from 'ng2-charts';
 
 @Component({
   selector: 'app-countries-comparator',
@@ -27,11 +29,15 @@ export class CountriesComparatorComponent implements OnInit {
   countriesNames: Country[] = [];
 
   displayedTableColumns = ['Confirmed', 'Deaths', 'Recovered', 'Active', 'Date'];
+  keysToStats = ['Confirmed', 'Deaths', 'Recovered', 'Active'];
 
   dateRange = new FormGroup({
     from: new FormControl(),
     to: new FormControl()
   });
+
+  graphsLabels: Label;
+  graphsData = new Map<string, ChartDataSets[]>();
 
   isLoading = false;
 
@@ -81,7 +87,24 @@ export class CountriesComparatorComponent implements OnInit {
         ([firstCountryData, secondCountryData]) => {
           this.firstCountryData = firstCountryData.map(dateMapper);
           this.secondCountryData = secondCountryData.map(dateMapper);
+          this.graphsLabels = firstCountryData.map(e => e.Date);
+          this.graphsData = new Map();
 
+          this.keysToStats.forEach(k => {
+            this.graphsData.set(
+              k,
+              [
+                {
+                  data: firstCountryData.map(e => e[k]),
+                  label: this.countries.get(this.firstSelectedCountry).Country,
+                },
+                {
+                  data: secondCountryData.map(e => e[k]),
+                  label: this.countries.get(this.secondSelectedCountry).Country,
+                }
+              ]
+            );
+          });
           this.isLoading = false;
         }
       );

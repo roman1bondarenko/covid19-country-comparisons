@@ -76,6 +76,15 @@
     [displayedColumns]="displayedTableColumns"
   >
   </app-table-stats>
-
 </div>
+
+<mat-card class="graph-card" *ngFor="let key of keysToStats">
+  {{key}} Graph
+  <app-graph
+    [barChartData]="graphsData.get(key)"
+    [barChartLabels]="graphsLabels"
+  >
+  </app-graph>
+</mat-card>
+
 
